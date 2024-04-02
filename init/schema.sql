@@ -1,28 +1,27 @@
-CREATE TABLE "events" (
+CREATE TABLE "eventos" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "title" TEXT NOT NULL,
-    "details" TEXT,
+    "titulo" TEXT NOT NULL,
+    "detalhes" TEXT,
     "slug" TEXT NOT NULL,
-    "maximum_attendees" INTEGER
+    "maximoParticipantes" INTEGER
 );
 
-CREATE TABLE "attendees" (
+CREATE TABLE "participantes" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "event_id" TEXT NOT NULL,
+    "evento_id" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "attendees_event_id_fkey" FOREIGN KEY ("event_id") REFERENCES "events" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "participantes_evento_id_fkey" FOREIGN KEY ("evento_id") REFERENCES "eventos" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE "check_ins" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "attendeeId" TEXT NOT NULL,
-    CONSTRAINT "check_ins_attendeeId_fkey" FOREIGN KEY ("attendeeId") REFERENCES "attendees" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "dataCriacao" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "participanteId" TEXT NOT NULL,
+    CONSTRAINT "check_ins_participanteId_fkey" FOREIGN KEY ("participanteId") REFERENCES "participantes" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE UNIQUE INDEX "events_slug_key" ON "events"("slug");
-CREATE UNIQUE INDEX "attendees_event_id_email_key" ON "attendees"("event_id", "email");
-CREATE UNIQUE INDEX "check_ins_attendeeId_key" ON "check_ins"("attendeeId");
-
+CREATE UNIQUE INDEX "eventos_slug_key" ON "eventos"("slug");
+CREATE UNIQUE INDEX "participantes_event_id_email_key" ON "participantes"("event_id", "email");
+CREATE UNIQUE INDEX "check_ins_participanteId_key" ON "check_ins"("participanteId");
