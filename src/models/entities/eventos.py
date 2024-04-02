@@ -10,3 +10,7 @@ class Eventos(Base):
     detalhes = Column(String)
     slug = Column(String, nullable=False)
     maximoParticipantes = Column(String, primary_key=True)
+
+
+    def __repr__(self):
+        return f"Eventos [titulo={self.titulo}, maximoParticipantes={self.maximoParticipantes}]"
