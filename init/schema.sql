@@ -12,16 +12,16 @@ CREATE TABLE "participantes" (
     "email" TEXT NOT NULL,
     "eventoId" TEXT NOT NULL,
     "dataCriacao" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "participantes_evento_id_fkey" FOREIGN KEY ("eventoId") REFERENCES "eventos" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "participantes_eventoId_fkey" FOREIGN KEY ("eventoId") REFERENCES "eventos" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE "check_ins" (
+CREATE TABLE "checkIns" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "dataCriacao" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "participanteId" TEXT NOT NULL,
-    CONSTRAINT "check_ins_participanteId_fkey" FOREIGN KEY ("participanteId") REFERENCES "participantes" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "checkIns_participanteId_fkey" FOREIGN KEY ("participanteId") REFERENCES "participantes" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE UNIQUE INDEX "eventos_slug_key" ON "eventos"("slug");
 CREATE UNIQUE INDEX "participantes_eventoId_email_key" ON "participantes"("eventoId", "email");
-CREATE UNIQUE INDEX "check_ins_participanteId_key" ON "check_ins"("participanteId");
+CREATE UNIQUE INDEX "checkIns_participanteId_key" ON "checkIns"("participanteId");
