@@ -1,6 +1,6 @@
 import uuid
-from src.models.repository.attendees_repository import AttendeesRepository
-from src.models.repository.eventosRepository import EventsRepository
+from src.models.repository.participantesRepository import ParticipantesRepository
+from src.models.repository.eventosRepository import EventosRepository
 from src.http_types.http_request import HttpRequest
 from src.http_types.http_response import HttpResponse
 from src.errors.error_types.http_not_found import HttpNotFoundError
@@ -9,28 +9,28 @@ from src.errors.error_types.http_conflict import HttpConflictError
 
 class ParticipantesHandler:
     def __init__(self) -> None:
-        self.__attendees_repository = AttendeesRepository()
-        self.__events_repository = EventsRepository()
+        self.__attendees_repository = ParticipantesRepository()
+        self.__events_repository = EventosRepository()
 
     def regitrar(self, http_request: HttpRequest) -> HttpResponse:
         body = http_request.body
-        event_id = http_request.param["event_id"]
+        eventoId = http_request.param["eventoId"]
 
-        event_attendees_count = self.__events_repository.count_event_attendees(event_id)
+        event_attendees_count = self.__events_repository.quantidadeParticipantesEvento(eventoId)
         if (
             event_attendees_count["participantesQuantidade"]
             and event_attendees_count["maximoParticipantes"] < event_attendees_count["participantesQuantidade"]
         ): raise HttpConflictError("Evento Lotado")
 
         body["uuid"] = str(uuid.uuid4())
-        body["event_id"] = event_id
-        self.__attendees_repository.insert_attendee(body)
+        body["eventoId"] = eventoId
+        self.__attendees_repository.inserirPaticipantes(body)
 
         return HttpResponse(body=None, status_code=201)
 
     def obterParticipanteCracha(self, http_request: HttpRequest) -> HttpResponse:
-        attendee_id = http_request.param["participanteId"]
-        cracha = self.__attendees_repository.get_attendee_badge_by_id(attendee_id)
+        participanteId = http_request.param["participanteId"]
+        cracha = self.__attendees_repository.obterParticipanteCrachaPorId(participanteId)
         if not cracha: raise HttpNotFoundError("Participante nao encontrado")
     
         return HttpResponse(
@@ -45,8 +45,8 @@ class ParticipantesHandler:
         )
 
     def obterParticipantePorEvento(self, http_request: HttpRequest) -> HttpResponse:
-        event_id = http_request.param["event_id"]
-        participantes = self.__attendees_repository.get_attendees_by_event_id(event_id)
+        eventoId = http_request.param["eventoId"]
+        participantes = self.__attendees_repository.obterParticipantePorEventoId(eventoId)
         if not participantes: raise HttpNotFoundError("Participantes nao encontrados")
 
         participantesFormatados = []

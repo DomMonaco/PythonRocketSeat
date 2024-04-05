@@ -8,7 +8,7 @@ class CheckInHandler:
 
     def registrar(self, http_request: HttpRequest) -> HttpResponse:
         informacoesCheckIn = http_request.param["participanteId"]
-        self.__check_in_respository.insert_check_in(informacoesCheckIn)
+        self.__check_in_respository.inserirCheckIns(informacoesCheckIn)
     
         return HttpResponse(
             body=None,

@@ -29,8 +29,8 @@ def obterParticipantesCracha(participanteId):
         http_response = handle_error(exception)
         return jsonify(http_response.body), http_response.statusCode
 
-@participantesRoute_bp.route("/events/<eventoId>/participantes", methods=["GET"])
-def get_attendees(eventoId):
+@participantesRoute_bp.route("/eventos/<eventoId>/participantes", methods=["GET"])
+def obterParticipantes(eventoId):
     try:
         participantesHandler = ParticipantesHandler()
         http_request = HttpRequest(param={ "eventoId": eventoId })

@@ -6,7 +6,7 @@ from src.errors.error_handler import handle_error
 checkInRoutes_bp = Blueprint("checkInRoute", __name__)
 
 @checkInRoutes_bp.route("/participantes/<participanteId>/checkIn", methods=["POST"])
-def create_check_in(participanteId):
+def criarCheckIn(participanteId):
     try:
         checkInHandler = CheckInHandler()
         http_request = HttpRequest(param={ "participanteId": participanteId })
