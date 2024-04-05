@@ -11,7 +11,7 @@ def handle_error(error: Exception) -> HttpResponse:
                     "detalhes": error.mensagem
                 }]
             },
-            status_code=error.statusCode
+            statusCode=error.statusCode
         )
 
     return HttpResponse(

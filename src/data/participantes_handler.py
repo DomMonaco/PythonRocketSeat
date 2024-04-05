@@ -1,6 +1,6 @@
 import uuid
 from src.models.repository.attendees_repository import AttendeesRepository
-from src.models.repository.events_repository import EventsRepository
+from src.models.repository.eventosRepository import EventsRepository
 from src.http_types.http_request import HttpRequest
 from src.http_types.http_response import HttpResponse
 from src.errors.error_types.http_not_found import HttpNotFoundError
